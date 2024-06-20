@@ -74,6 +74,19 @@ flutter:
     - assets/foods/promotion/
     - assets/foods/allstore/
     - assets/foods/store/
+    #BuySell
+    - assets/buy_sell/buysell/
+    - assets/buy_sell/category/
+    #Shop
+    - assets/shop/all/
+    - assets/shop/category/
+    - assets/shop/featurestore/
+    - assets/shop/free/
+    - assets/shop/new/
+    - assets/shop/promotion/
+    - assets/shop/special/
+    - assets/shop/trending/
+    
 
   #   - images/a_dot_ham.jpeg
 
