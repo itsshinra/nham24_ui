@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nham24_ui/models/nham24_model.dart';
 import 'package:nham24_ui/screens/buy_sell_screen.dart';
 import 'package:nham24_ui/screens/food_screen.dart';
 import 'package:nham24_ui/screens/shop_screen.dart';
@@ -14,6 +15,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -26,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 24),
               _buildBannerPromotion(),
               const SizedBox(height: 16),
-              _buildCategory(context),
+              _buildCategory(),
               const SizedBox(height: 16),
               _buildGiftVoucher(),
               const SizedBox(height: 24),
@@ -52,9 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: _nham24.length,
                   itemBuilder: (context, index) {
-                    return _buildNham24Item();
+                    var nham24 = _nham24[index];
+                    return _buildNham24Item(nham24);
                   },
                 ),
               ),
@@ -77,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              _buildContactMenu(context),
+              _buildContactMenu(),
             ],
           ),
         ),
@@ -86,6 +93,108 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Promotion
+  Widget _buildBannerPromotion() {
+    return SizedBox(
+      height: 200,
+      child: PageView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _promotion.length,
+        itemBuilder: (context, index) {
+          var promot = _promotion[index];
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            height: MediaQuery.sizeOf(context).height * 0.2,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: AssetImage(
+                  promot,
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  final List<String> _promotion = [
+    'assets/home/promotion/1.jpg',
+    'assets/home/promotion/2.jpg',
+    'assets/home/promotion/3.jpg',
+    'assets/home/promotion/4.jpg',
+    'assets/home/promotion/5.jpg',
+    'assets/home/promotion/6.jpg',
+    'assets/home/promotion/7.jpg',
+    'assets/home/promotion/8.jpg',
+  ];
+  // End Promotion
+
+  // Trending now
+  Widget _buildTrendingNowItem() {
+    return SizedBox(
+      height: 300,
+      child: GridView.builder(
+        scrollDirection: Axis.horizontal,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+        ),
+        itemCount: _trending.length,
+        itemBuilder: (context, index) {
+          var trending = _trending[index];
+          return Container(
+            height: 135,
+            width: 135,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: AssetImage(trending),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  final List<String> _trending = [
+    'assets/home/trending/1.jpg',
+    'assets/home/trending/2.jpg',
+    'assets/home/trending/3.jpg',
+    'assets/home/trending/4.jpg',
+    'assets/home/trending/5.jpg',
+    'assets/home/trending/6.jpg',
+    'assets/home/trending/7.jpg',
+    'assets/home/trending/8.jpg',
+    'assets/home/trending/9.jpg',
+    'assets/home/trending/10.jpg',
+    'assets/home/trending/11.jpg',
+    'assets/home/trending/12.jpg',
+    'assets/home/trending/13.jpg',
+    'assets/home/trending/14.jpg',
+    'assets/home/trending/15.jpg',
+    'assets/home/trending/16.jpg',
+    'assets/home/trending/17.jpg',
+    'assets/home/trending/18.jpg',
+    'assets/home/trending/19.jpg',
+    'assets/home/trending/20.jpg',
+    'assets/home/trending/21.jpg',
+    'assets/home/trending/22.jpg',
+    'assets/home/trending/23.jpg',
+    'assets/home/trending/24.jpg',
+    'assets/home/trending/25.jpg',
+    'assets/home/trending/26.jpg',
+  ];
+  // End Trending now
+
+  // BottomNav
   BottomNavigationBar _buildBottomNav() {
     return BottomNavigationBar(
       selectedItemColor: nPrimaryColor,
@@ -111,8 +220,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+  // End BottomNav
 
-  Widget _buildContactMenu(BuildContext context) {
+  // Contact
+  Widget _buildContactMenu() {
     return SizedBox(
       child: GridView(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -210,7 +321,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  // End Contact
 
+  // What's new
   Widget _buildWhatNew() {
     return SizedBox(
       height: 450,
@@ -233,8 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
                   image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgtX_uCQ_k0BvIAqyYcdrznL0fuD8-0HyVXZYkASwWbm8q5iq-5oQiFDEJcq0xWVqUoRE&usqp=CAU'),
+                    image: AssetImage("assets/home/what'snew/1.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -253,8 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
                   image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgtX_uCQ_k0BvIAqyYcdrznL0fuD8-0HyVXZYkASwWbm8q5iq-5oQiFDEJcq0xWVqUoRE&usqp=CAU'),
+                    image: AssetImage("assets/home/what'snew/2.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -273,8 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
                   image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgtX_uCQ_k0BvIAqyYcdrznL0fuD8-0HyVXZYkASwWbm8q5iq-5oQiFDEJcq0xWVqUoRE&usqp=CAU'),
+                    image: AssetImage("assets/home/what'snew/3.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -293,30 +403,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
                   image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgtX_uCQ_k0BvIAqyYcdrznL0fuD8-0HyVXZYkASwWbm8q5iq-5oQiFDEJcq0xWVqUoRE&usqp=CAU'),
+                    image: AssetImage("assets/home/what'snew/4.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(height: 5),
-              const Text('Shop new delivery now!'),
+              const Text(
+                '30% Discount for use nham24 bus',
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
           ),
         ],
       ),
     );
   }
+  // End What's new
 
-  Widget _buildNham24Item() {
+  // Nham24
+  Widget _buildNham24Item(Nham24Model item) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'NHAM24 Fresh | Open 24/7',
-            style: TextStyle(
+          Text(
+            item.title.toString(),
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -328,17 +442,16 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(15),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    'https://www.wooribank.com.kh/wp-content/uploads/2022/11/Nham24-Web-1.jpg'),
+              image: DecorationImage(
+                image: AssetImage(item.image.toString()),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'NHAM24 Fresh | Open 24/7',
-            style: TextStyle(
+          Text(
+            item.decoration.toString(),
+            style: const TextStyle(
               fontWeight: FontWeight.w400,
             ),
           ),
@@ -347,34 +460,34 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTrendingNowItem() {
-    return SizedBox(
-      height: 300,
-      child: GridView.builder(
-        scrollDirection: Axis.horizontal,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        itemBuilder: (context, index) {
-          return Container(
-            height: 135,
-            width: 135,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgtX_uCQ_k0BvIAqyYcdrznL0fuD8-0HyVXZYkASwWbm8q5iq-5oQiFDEJcq0xWVqUoRE&usqp=CAU'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
+  final List<Nham24Model> _nham24 = [
+    Nham24Model(
+      title: 'NHAM24 Fresh | Open 24/7',
+      image: 'assets/home/nham24/1.jpg',
+      decoration: 'NHAM24 Fresh | Open 24/7',
+    ),
+    Nham24Model(
+      title: 'NHAM24 Travel',
+      image: 'assets/home/nham24/5.jpg',
+      decoration: 'Vireak Buntham Express is now avaalable in NHAM24 Travel ',
+    ),
+    Nham24Model(
+      title: 'NHAM24 Travel',
+      image: 'assets/home/nham24/3.jpg',
+      decoration: 'Book you next trip with Bus, Ferry or Private Taxi.',
+    ),
+    Nham24Model(
+      title: 'NHAM24 Express',
+      image: 'assets/home/nham24/2.jpg',
+      decoration: 'Send and reveive packages in minutes',
+    ),
+    Nham24Model(
+      title: 'Join to Be the First to Know!',
+      image: 'assets/home/nham24/4.jpg',
+      decoration: 'Get the latest promotions from NHAM24 direct in Telegram',
+    ),
+  ];
+  // End Nham24
 
   Widget _buildGiftVoucher() {
     return Row(
@@ -453,7 +566,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCategory(BuildContext context) {
+  Widget _buildCategory() {
     return SizedBox(
       height: 250,
       child: GridView(
@@ -655,31 +768,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildBannerPromotion() {
-    return SizedBox(
-      height: 200,
-      child: PageView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            height: MediaQuery.sizeOf(context).height * 0.2,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              image: const DecorationImage(
-                image: NetworkImage(
-                  'https://cdn6.aptoide.com/imgs/d/2/2/d22aaee0212a689cf5a9e5564baa04ca_fgraphic.jpg',
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-          );
-        },
       ),
     );
   }
