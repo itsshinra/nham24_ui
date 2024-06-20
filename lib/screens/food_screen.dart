@@ -15,6 +15,7 @@ class _FoodScreenState extends State<FoodScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -609,10 +610,7 @@ class _FoodScreenState extends State<FoodScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
-                  Iconsax.arrow_left_2,
-                  color: Colors.black,
-                ),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
               ),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

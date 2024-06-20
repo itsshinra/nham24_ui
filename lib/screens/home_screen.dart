@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -81,6 +82,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: _buildBottomNav(),
+    );
+  }
+
+  BottomNavigationBar _buildBottomNav() {
+    return BottomNavigationBar(
+      selectedItemColor: nPrimaryColor,
+      unselectedItemColor: Colors.black,
+      iconSize: 32,
+      unselectedLabelStyle: const TextStyle(
+        fontSize: 11,
+        color: Colors.black,
+        fontWeight: FontWeight.w600,
+      ),
+      selectedLabelStyle: const TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.w600,
+      ),
+      type: BottomNavigationBarType.fixed,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'HOME'),
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'SEARCH'),
+        BottomNavigationBarItem(icon: Icon(Icons.history), label: 'HISTORY'),
+        BottomNavigationBarItem(icon: Icon(Icons.inbox), label: 'INBOX'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.account_box_rounded), label: 'MY ACCOUNT'),
+      ],
     );
   }
 
@@ -354,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Expanded(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
-            height: 80,
+            height: 75,
             width: double.infinity,
             decoration: BoxDecoration(
               color: nPrimaryColor,
@@ -396,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Expanded(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
-            height: 80,
+            height: 75,
             width: double.infinity,
             decoration: BoxDecoration(
               color: nPrimaryColor,
